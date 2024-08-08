@@ -38,7 +38,7 @@ delay = 300
 font = pygame.font.Font(None, 32)
 
 win = pygame.display.set_mode((win_width, win_height))
-pygame.display.set_caption("prisoner's dilemma")
+pygame.display.set_caption("Prisoner's Dilemma")
 
 def allways_pos():
     global player_1_x
@@ -60,20 +60,20 @@ while running:
     
     win.fill(BLACK)
 
-    player_1_header = (font.render("Player 1:" + str(p1_score), True, WHITE))
-    player_1_header_rect = player_1_header.get_rect()
+    player_1_header = font.render("Player 1: " + str(p1_score), True, WHITE)
+    player_1_header_rect = player_1_header.get_rect(topleft=(10, 10))
     win.blit(player_1_header, player_1_header_rect)
 
-    player_2_header = (font.render("Player 2:", True, WHITE))
-    player_2_header_rect = player_2_header.get_rect()
-    player_2_header_rect.topleft = (650, 0)
+    player_2_header = font.render("Player 2: " + str(p2_score), True, WHITE)
+    player_2_header_rect = player_2_header.get_rect(topleft=(650, 10))
     win.blit(player_2_header, player_2_header_rect)
 
-
+    p1_red = False
     for rect in player_1_rects:
         pygame.draw.rect(win, GREEN, rect)
-        p1_red = False 
-    
+        p1_red = False
+
+    p2_red = True
     for rect in player_2_rects:
         pygame.draw.rect(win, RED, rect)
         p2_red = True
@@ -85,30 +85,18 @@ while running:
         pygame.time.delay(delay)
         runs -= 1
 
-    ## Punkte vergabe
-    if p1_red == False and p2_red == False:
+    if not p1_red and not p2_red:
         p1_score += 3
         p2_score += 3
-    if p1_red == False and p2_red:
+    elif not p1_red and p2_red:
         p2_score += 5
-    if p1_red and p2_red == False:
+    elif p1_red and not p2_red:
         p1_score += 5
-    if p1_red and p2_red:
+    elif p1_red and p2_red:
         p1_score += 1
         p2_score += 1
-        
     
     pygame.display.flip()
 
-
 pygame.quit()
 sys.exit()
-
-## Senarien mit kooperieren/konkurieren ("cooperate" is "compete")
-# beide kooperieren = beide 3 points
-# einer kooperiert, einer konkuriert = der konkurierende 5 points
-# beide konkurieren = beide 1 point
-
-
-## TODO
-# - Das delay wird bei dem letzten spawnen der rects nicht beachtet
