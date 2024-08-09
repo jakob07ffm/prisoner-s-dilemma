@@ -4,53 +4,63 @@ import time
 
 pygame.init()
 
-win_width = 800
-win_height = 800
-
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 WHITE = (255, 255, 255)
 
-player_1_color = WHITE
-player_2_color = WHITE
+font = pygame.font.Font(None, 32)
 
-player_1_rects = []
-player_2_rects = []
+win_width = 800
+win_height = 800
 
-player_1_x = 0
-player_1_y = 300
+rounds = 10
+runs = 0
 
-player_2_x = 0
-player_2_y = 500
-
-p1_red = False
-p2_red = False
+#Var die zeigt ob rot grün(kooperieren oder konkurenz)
+# 0 = konkurieren, 1 = kooperieren
+p1 = None
+p2 = None
 
 p1_score = 0
 p2_score = 0
 
-rects_margin = 80
-
-runs = 10
-delay = 300
-
-font = pygame.font.Font(None, 32)
+p1_decisions = []
+p2_decisions = []
 
 win = pygame.display.set_mode((win_width, win_height))
-pygame.display.set_caption("Prisoner's Dilemma")
+pygame.display.set_caption("prisoner's dilemma")
 
-def allways_pos():
-    global player_1_x
-    p1_template = pygame.Rect(player_1_x, player_1_y, 40, 40)
-    player_1_x += rects_margin
-    player_1_rects.append(p1_template)
+def p1_choise():
+    p1 = 0
+    p1_decisions.append(p1)
 
-def allways_neg():
-    global player_2_x
-    p2_template = pygame.Rect(player_2_x, player_2_y, 40, 40)
-    player_2_x += rects_margin
-    player_2_rects.append(p2_template)
+def p2_choise():
+    p2 = 1
+    if runs >= 1:
+        if p1_decisions[runs] == 0:
+            p2 = 0
+    p2_decisions.append(p2)
+
+def points():
+    global p1_score, p2_score
+    # Funktion die die Punkte vergibt:
+
+    #beide Partein kooperieren
+    if p1_decisions[runs] == 1 and p2_decisions[runs] == 1:
+        p1_score += 3
+        p2_score += 3
+
+    #einer der Beiden kooperiert und der andere nicht
+    if p1_decisions[runs] == 1 and p2_decisions[runs] == 0:
+        p2_score += 5
+    if p2_decisions[runs] == 1 and p1_decisions[runs]== 0:
+        p1_score += 5
+
+    #beide Partein konkurieren
+    if p1_decisions[runs] == 0 and p2_decisions[runs] == 0:
+        p1_score += 1
+        p2_score += 1
 
 running = True
 while running:
@@ -60,43 +70,31 @@ while running:
     
     win.fill(BLACK)
 
-    player_1_header = font.render("Player 1: " + str(p1_score), True, WHITE)
-    player_1_header_rect = player_1_header.get_rect(topleft=(10, 10))
-    win.blit(player_1_header, player_1_header_rect)
+    p1_choise()
+    p2_choise()
+    points()
 
-    player_2_header = font.render("Player 2: " + str(p2_score), True, WHITE)
-    player_2_header_rect = player_2_header.get_rect(topleft=(650, 10))
-    win.blit(player_2_header, player_2_header_rect)
+    print(runs)
+    print(p1_decisions)
+    print(p2_decisions)
+    print(p1_score, p2_score)
 
-    p1_red = False
-    for rect in player_1_rects:
-        pygame.draw.rect(win, GREEN, rect)
-        p1_red = False
-
-    p2_red = True
-    for rect in player_2_rects:
-        pygame.draw.rect(win, RED, rect)
-        p2_red = True
-
-    if runs > 0:
-        allways_pos()
-        pygame.time.delay(delay)
-        allways_neg()
-        pygame.time.delay(delay)
-        runs -= 1
-
-    if not p1_red and not p2_red:
-        p1_score += 3
-        p2_score += 3
-    elif not p1_red and p2_red:
-        p2_score += 5
-    elif p1_red and not p2_red:
-        p1_score += 5
-    elif p1_red and p2_red:
-        p1_score += 1
-        p2_score += 1
-    
+    runs += 1
     pygame.display.flip()
+
+    if runs >= rounds:
+        running = False
 
 pygame.quit()
 sys.exit()
+
+
+# 1 = Green
+# 0 = Red
+
+
+#todo
+# - vielleicht return statement benutzen
+# - Neue Syteme / Algorüthmen finden + ihre Namen
+# - Das Belohnungssystem erstelle(score) #
+# - Gerade handel p2 mit dem wissen was p1 gewählt hat.#
