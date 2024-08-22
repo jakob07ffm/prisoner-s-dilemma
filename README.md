@@ -7,8 +7,6 @@ This project is a simple simulator of the Prisoner's Dilemma game using Pygame. 
 - [Usage](#usage)
 - [Game Mechanics](#game-mechanics)
 - [Customization](#customization)
-- [Future Enhancements](#future-enhancements)
-- [License](#license)
 
 ## Usage
 - The simulator starts with both players making decisions in each round.
