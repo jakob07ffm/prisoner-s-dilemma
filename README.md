@@ -32,3 +32,5 @@ The game window is filled with a black background, and the round continues until
 ## Customization
 - Change Rounds: Modify the rounds variable.
 - Update Strategies: Edit the p1_choise() and p2_choise() functions.
+
+![](pd_screenshot.JPG)
