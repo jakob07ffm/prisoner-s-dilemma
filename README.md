@@ -2,12 +2,6 @@
 
 This project is a simple simulator of the Prisoner's Dilemma game using Pygame. The game demonstrates the decision-making process between two players (Player 1 and Player 2) in a classic dilemma scenario where they must choose whether to cooperate or compete.
 
-## Table of Contents
-
-- [Usage](#usage)
-- [Game Mechanics](#game-mechanics)
-- [Customization](#customization)
-
 ## Usage
 - The simulator starts with both players making decisions in each round.
 - Player 1 always competes (chooses 0), while Player 2's strategy is to cooperate (1) in the first round. After the first round, Player 2 bases its decision on Player 1's previous choice.
@@ -32,5 +26,19 @@ The game window is filled with a black background, and the round continues until
 ## Customization
 - Change Rounds: Modify the rounds variable.
 - Update Strategies: Edit the p1_choise() and p2_choise() functions.
+
+## Game Output
+
+Each round of the game provides the following:
+
+- **Round Number**: The current round (variable `runs`).
+
+- **Player 1 Decisions**: List of choices made by Player 1 (0 = not cooperating, 1 = cooperating).
+  
+- **Player 2 Decisions**: List of choices made by Player 2 (0 = not cooperating, 1 = cooperating).
+
+- **Scores**: 
+  - Player 1's total score.
+  - Player 2's total score.
 
 ![](pd_screenshot.JPG)
