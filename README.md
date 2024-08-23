@@ -42,3 +42,7 @@ Each round of the game provides the following:
   - Player 2's total score.
 
 ![](pd_screenshot.JPG)
+
+## How to install it
+- download the repo files (make sure you have python + pygame installed)
+- open the main.py file and run it. In the terminal you will see the rusult 
